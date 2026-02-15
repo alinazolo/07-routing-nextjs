@@ -7,10 +7,9 @@ import { deleteNote } from "@/lib/api";
 
 interface NoteListProps {
   notes: Note[];
-  item: Note;
 }
 
-export default function NoteList({notes, item}: NoteListProps) {
+export default function NoteList({notes}: NoteListProps) {
     const queryClient = useQueryClient();
    const {mutate} = useMutation({
         mutationFn: deleteNote,
@@ -27,7 +26,7 @@ queryClient.invalidateQueries({queryKey: ["notes"]})
     <p className={css.content}>{note.content}</p>
     <div className={css.footer}>
               <span className={css.tag}>{note.tag}</span>
-              <Link href={`/notes/${item.id}`}>View Details</Link>
+              <Link href={`/notes/${note.id}`}>View Details</Link>
       <button
         className={css.button}
         onClick={() => mutate(note.id)}

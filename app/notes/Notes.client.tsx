@@ -2,14 +2,15 @@
 import { fetchNotes } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
 import css from './NotesPage.module.css';
-import Link from 'next/link';
 import { useState } from "react";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import { useDebouncedCallback } from "use-debounce";
 import Pagination from "@/components/Pagination/Pagination";
 import NoteList from '@/components/NoteList/NoteList';
 import Loading from '@/app/loading';
-import Error  from '@/app/error';
+import Error from '@/app/error';
+import Modal from "@/components/Modal/Modal";
+import NoteForm from '@/components/NoteForm/NoteForm';
 
 export default function NotesClient() {
     const [query, setQuery] = useState('');
@@ -31,18 +32,29 @@ setCurrentPage(1);
         refetchOnMount: false,
     });
     
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
     return (
         <>
             <div className={css.app}>
                 <header className={css.toolbar}> <SearchBox text={query} onSearch={debouncedSetQuery} />
             {isSuccess && (
     <Pagination page={currentPage} totalPages={data.totalPages} onPageChange={setCurrentPage}/>
-                    )}</header>
-                 {isLoading && <Loading/>}
+                    )}
+                    <button className={css.button} onClick={openModal}>Create note +</button>
+                    {isModalOpen && (
+<Modal onClose={closeModal}>
+<NoteForm onClose={closeModal}></NoteForm>
+</Modal>
+)}
+</header>
+  {isLoading && <Loading/>}
   {error && <Error error={error}/>}
              </div>
             	
-            {data && isSuccess && data.notes.length > 0 && <NoteList notes={data.notes} item={data.id} />}
+            {data && isSuccess && data.notes.length > 0 && <NoteList notes={data.notes}/>}
         </>
     )
     }

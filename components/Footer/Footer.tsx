@@ -7,8 +7,8 @@ import css from "./Footer.module.css";
     <div className={css.wrap}>
       <p>Developer: Alina Zolotopup</p>
       <p>
-        Contact us:
-        <a href="mailto:alinazolotopup99@gmail.com">student@notehub.app</a>
+        Contact us: 
+        <a href="mailto:alinazolotopup99@gmail.com"> alinazolotopup99@gmail.com</a>
       </p>
     </div>
   </div>

@@ -12,8 +12,8 @@ export default function NoteDetailsClient() {
         queryFn: () => fetchNoteById(id),
         refetchOnMount: false,
     });
- if (isLoading) return <p>Loading...</p>;
-    if (error || !note) return <p>Some error..</p>;
+   if (isLoading) return <p><p>Loading, please wait...</p></p>;
+    if (error || !note) return <p><p>Something went wrong.</p>;</p>;
     
     const formattedDate = note.updatedAt
         ? `Updated at: ${note.updatedAt}`
@@ -23,11 +23,11 @@ export default function NoteDetailsClient() {
         <div className={css.container}>
 	<div className={css.item}>
 	  <div className={css.header}>
-	    <h2>Note title</h2>
+	    <h2>{note.title}</h2>
 	  </div>
       <p className={css.tag}>{note?.tag}</p>
 	  <p className={css.content}>{note?.content}</p>
-	  <p className={css.date}>{note?.createdAt}</p>
+	  <p className={css.date}>{formattedDate}</p>
 	</div>
 </div>
     )
