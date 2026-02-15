@@ -7,7 +7,7 @@ import SearchBox from "@/components/SearchBox/SearchBox";
 import { useDebouncedCallback } from "use-debounce";
 import Pagination from "@/components/Pagination/Pagination";
 import NoteList from '@/components/NoteList/NoteList';
-import Loading from '@/app/notes/loading';
+import Loading from '@/app/loading';
 import Error from '@/app/notes/error';
 import Modal from "@/components/Modal/Modal";
 import NoteForm from '@/components/NoteForm/NoteForm';
