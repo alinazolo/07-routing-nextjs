@@ -6,3 +6,12 @@ export interface Note {
     updatedAt: string
     tag: string;
 }
+export type NoteTag = "Todo" | "Work" | "Personal" | "Shopping" | "Meeting";
+
+export const tags: NoteTag[] = [
+  "Todo",
+  "Work",
+  "Personal",
+  "Shopping",
+  "Meeting",
+];

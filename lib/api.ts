@@ -10,16 +10,18 @@ interface FetchNotesResponse {
 }
 
 interface fetchNotesProps {
-search: string;
-page: number;
-perPage: number;
+search?: string;
+page?: number;
+  perPage?: number;
+  tag?: string;
 }
  
-export const fetchNotes = async ({ search, page, perPage }: fetchNotesProps ) => {
+export const fetchNotes = async ({ search, page, perPage, tag }: fetchNotesProps ) => {
   const params: Record<string, string | number | undefined> = {};
   if (search) params.search = search;
   if (page) params.page = page;
   if (perPage) params.perPage = perPage;
+  if (tag) params.tag = tag;
   const {data} = await axios.get<FetchNotesResponse>("/notes",
     {
       params,
@@ -43,6 +45,7 @@ export const fetchNoteById = async(id: string) => {
   );
   return data;
 }
+
 
 
 export const createNote = async (noteData: Pick<Note, "title" | "content" | "tag"> ) => {
