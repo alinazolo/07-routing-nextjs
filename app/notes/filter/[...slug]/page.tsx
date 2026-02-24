@@ -1,5 +1,5 @@
 import { fetchNotes } from "@/lib/api";
-import NotesClient from "./NotesClient";
+import NotesClient from "./Notes.client";
 import { NoteTag } from "@/types/note";
 import {
     dehydrate,

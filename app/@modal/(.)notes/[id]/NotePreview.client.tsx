@@ -1,11 +1,18 @@
 'use client'
-import css from "./NoteDetails.module.css";
-import { fetchNoteById } from "@/lib/api";
+
+import Modal from "@/components/Modal/Modal";
+import { useRouter } from "next/navigation";
+import css from "./NotePreview.module.css";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import Loading from "./loading";
+import { fetchNoteById } from "@/lib/api";
+import Loader from "@/components/Loader/Loader";
+import ErrorMessage from "@/components/Error/ErrorMessage";
 
-export default function NoteDetailsClient() {
+export default function NotePreviewClient() {
+    const router = useRouter();
+    const close = () => router.back();
+    
     const { id } = useParams<{ id: string }>();
     
     const { data: note, isLoading, error, isSuccess } = useQuery({
@@ -14,11 +21,13 @@ export default function NoteDetailsClient() {
         placeholderData: keepPreviousData,
         refetchOnMount: false,
     });
-    
+
     return (
-        <div className={css.container}>
-            {isLoading && <Loading />}
-             {error && <p>Something went wrong.</p>}
+        <>
+            <Modal onClose={close}>
+                <div className={css.container}>
+                    {isLoading && <Loader />}
+                    {error && <ErrorMessage error={error} />}
     {isSuccess && 
 	<div className={css.item}>
 	  <div className={css.header}>
@@ -30,5 +39,8 @@ export default function NoteDetailsClient() {
                 </div>
             }
 </div>
+            </Modal>
+        </>
     )
 }
+
