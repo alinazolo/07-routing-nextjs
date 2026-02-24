@@ -18,7 +18,8 @@ interface NotesClientProps {
 }
 
 export default function NotesClient({ tag }: NotesClientProps) {
-  
+    const normalizedTag = tag === "all" ? undefined : tag;
+    
 const [query, setQuery] = useState('');
 const [currentPage, setCurrentPage] = useState(1);
  const [perPage] = useState(12);
@@ -32,9 +33,9 @@ setCurrentPage(1);
   
   
     const { data, isLoading, error, isSuccess } = useQuery({
-        queryKey: ["notes", { search: "", page: currentPage, perPage, tag }],
+        queryKey: ["notes", query, currentPage, perPage, normalizedTag],
         queryFn: () => fetchNotes(
-            { search: query, page: currentPage, perPage, tag}), 
+            { search: query, page: currentPage, perPage, tag: normalizedTag }), 
         placeholderData: keepPreviousData,
         refetchOnMount: false,
     });

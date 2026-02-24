@@ -14,19 +14,19 @@ interface PageProps {
 export default async function Notes({ params }: PageProps) {
   const { slug } = await params;
    const currentTag = (slug?.[0] ?? "all") as
-    | NoteTag
-    | "all";
+    | NoteTag | "all";
+  const normalizedTag = currentTag === "all" ? undefined : currentTag;
+  
 const queryClient = new QueryClient();
   
     await queryClient.prefetchQuery({
-      queryKey: ["notes",
-        { search: "", page: 1, perPage: 12, tag: currentTag },],
+      queryKey: ["notes", "", 1, 12, normalizedTag],
       queryFn: () =>
         fetchNotes({
       search: "",
       page: 1,
       perPage: 12,
-      tag: currentTag === "all" ? undefined : currentTag,
+      tag: normalizedTag,
         }),
     });
 
